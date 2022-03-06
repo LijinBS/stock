@@ -49,9 +49,14 @@ function Modal({ props, callback }) {
         <Formik
           initialValues={{ qty: 1 }}
           validationSchema={buySchema}
-          onSubmit={({qty}) => {
+          onSubmit={({qty}, actions) => {
             dispatch(updateStockQty({Symbol: selectedStock.Symbol , qty , lastUpdated: moment().format()}))
             callback(false, {name: selectedStock.Name, qty})
+            actions.resetForm({
+              values : {
+                qty: 1
+              }
+            })
           }}
         >
           {({ errors, touched, isValid }) => (
